@@ -17,4 +17,6 @@ Suppose this is your plist file:
 
 This would get converted into a QVariantMap, with keys SomeKey and MyOtherKey, with respective values Value1 and Value2.  If your PList has arrays or dictionaries inside, they are converted to QVariantLists and QVariantMaps.
 
+It can also do the conversion the other way: if you have a QVariant, QVariantList, or QVariantMap, it can generate a PList file out of it, using PListSerializer.
+
 That's it!
