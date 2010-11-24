@@ -24,10 +24,6 @@ QVariant PListParser::parsePList(QIODevice *device) {
 	return parseElement(root.firstChild().toElement());
 }
 
-QDateTime PListParser::parseDate(const QString& text) {
-	return QDateTime::fromString(text, Qt::ISODate);
-}
-
 QVariant PListParser::parseElement(const QDomElement &e) {
 	QString tagName = e.tagName();
 	QVariant result;
@@ -56,7 +52,7 @@ QVariant PListParser::parseElement(const QDomElement &e) {
 		result = false;
 	}
 	else if (tagName == "date") {
-		result = parseDate(e.text());
+		result = QDateTime::fromString(e.text(), Qt::ISODate);
 	}
 	else {
 		qDebug() << "PListParser Warning: Invalid tag found: " << e.tagName() << e.text();
@@ -64,21 +60,15 @@ QVariant PListParser::parseElement(const QDomElement &e) {
 	return result;
 }
 
+
 QVariantList PListParser::parseArrayElement(const QDomElement& element) {
 	QVariantList result;
 	QDomNodeList children = element.childNodes();
-	QString currentKey = "";
 	for (int i = 0; i < children.count(); i++) {
 		QDomNode child = children.at(i);
 		QDomElement e = child.toElement();
 		if (!e.isNull()) {
-			QString tagName = e.tagName();
-			if (tagName == "key") {
-				currentKey = e.text();
-			}
-			else if (currentKey != "") {
-				result.append(parseElement(e));
-			}
+			result.append(parseElement(e));
 		}
 	}
 	return result;

@@ -8,7 +8,6 @@ class PListParser {
 public:
 	static QVariant parsePList(QIODevice *device);
 private:
-	static QDateTime parseDate(const QString& text);
 	static QVariant parseElement(const QDomElement &e);
 	static QVariantList parseArrayElement(const QDomElement& node);
 	static QVariantMap parseDictElement(const QDomElement& element);
