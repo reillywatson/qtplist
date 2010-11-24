@@ -6,9 +6,15 @@
 QVariant PListParser::parsePList(QIODevice *device) {
 	QVariantMap result;
 	QDomDocument doc;
-	bool success = doc.setContent(device);
+	QString errorMessage;
+	int errorLine;
+	int errorColumn;
+	bool success = doc.setContent(device, false, &errorMessage, &errorLine, &errorColumn);
 	if (!success) {
 		qDebug() << "PListParser Warning: Could not parse PList file!";
+		qDebug() << "Error message: " << errorMessage;
+		qDebug() << "Error line: " << errorLine;
+		qDebug() << "Error column: " << errorColumn;
 		return result;
 	}
 	QDomElement root = doc.documentElement();
