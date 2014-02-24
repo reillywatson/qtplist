@@ -18,7 +18,7 @@ QVariant PListParser::parsePList(QIODevice *device) {
 		return result;
 	}
 	QDomElement root = doc.documentElement();
-	if (root.attribute("version", "1.0") != "1.0") {
+	if (root.attribute(QStringLiteral("version"), QStringLiteral("1.0")) != QLatin1String("1.0")) {
 		qDebug() << "PListParser Warning: plist is using an unknown format version, parsing might fail unexpectedly";
 	}
 	return parseElement(root.firstChild().toElement());
@@ -27,31 +27,31 @@ QVariant PListParser::parsePList(QIODevice *device) {
 QVariant PListParser::parseElement(const QDomElement &e) {
 	QString tagName = e.tagName();
 	QVariant result;
-	if (tagName == "dict") {
+	if (tagName == QLatin1String("dict")) {
 		result = parseDictElement(e);
 	}
-	else if (tagName == "array") {
+	else if (tagName == QLatin1String("array")) {
 		result = parseArrayElement(e);
 	}
-	else if (tagName == "string") {
+	else if (tagName == QLatin1String("string")) {
 		result = e.text();
 	}
-	else if (tagName == "data") {
+	else if (tagName == QLatin1String("data")) {
 		result = QByteArray::fromBase64(e.text().toUtf8());
 	}
-	else if (tagName == "integer") {
+	else if (tagName == QLatin1String("integer")) {
 		result = e.text().toInt();
 	}
-	else if (tagName == "real") {
+	else if (tagName == QLatin1String("real")) {
 		result = e.text().toFloat();
 	}
-	else if (tagName == "true") {
+	else if (tagName == QLatin1String("true")) {
 		result = true;
 	}
-	else if (tagName == "false") {
+	else if (tagName == QLatin1String("false")) {
 		result = false;
 	}
-	else if (tagName == "date") {
+	else if (tagName == QLatin1String("date")) {
 		result = QDateTime::fromString(e.text(), Qt::ISODate);
 	}
 	else {
@@ -59,7 +59,6 @@ QVariant PListParser::parseElement(const QDomElement &e) {
 	}
 	return result;
 }
-
 
 QVariantList PListParser::parseArrayElement(const QDomElement& element) {
 	QVariantList result;
@@ -77,16 +76,16 @@ QVariantList PListParser::parseArrayElement(const QDomElement& element) {
 QVariantMap PListParser::parseDictElement(const QDomElement& element) {
 	QVariantMap result;
 	QDomNodeList children = element.childNodes();
-	QString currentKey = "";
+	QString currentKey;
 	for (int i = 0; i < children.count(); i++) {
 		QDomNode child = children.at(i);
 		QDomElement e = child.toElement();
 		if (!e.isNull()) {
 			QString tagName = e.tagName();
-			if (tagName == "key") {
+			if (tagName == QLatin1String("key")) {
 				currentKey = e.text();
 			}
-			else if (currentKey != "") {
+			else if (!currentKey.isEmpty()) {
 				result[currentKey] = parseElement(e);
 			}
 		}

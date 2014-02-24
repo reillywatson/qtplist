@@ -1,10 +1,9 @@
 #include "PListSerializer.h"
 #include <QDomElement>
-#include <QDomNode>
 #include <QDomDocument>
 
-static QDomElement textElement(QDomDocument& doc, QString tagName, QString contents) {
-	QDomElement tag = doc.createElement(tagName);
+static QDomElement textElement(QDomDocument& doc, const char *tagName, QString contents) {
+	QDomElement tag = doc.createElement(QString::fromLatin1(tagName));
 	tag.appendChild(doc.createTextNode(contents));
 	return tag;
 }
@@ -13,10 +12,10 @@ static QDomElement serializePrimitive(QDomDocument &doc, const QVariant &variant
 	QDomElement result;
 	if (variant.type() == QVariant::Bool) {
 		if (variant.toBool()) {
-			result.setTagName("true");
+			result.setTagName(QStringLiteral("true"));
 		}
 		else {
-			result.setTagName("false");
+			result.setTagName(QStringLiteral("false"));
 		}
 	}
 	else if (variant.type() == QVariant::Date) {
@@ -26,7 +25,7 @@ static QDomElement serializePrimitive(QDomDocument &doc, const QVariant &variant
 		result = textElement(doc, "date", variant.toDateTime().toString(Qt::ISODate));
 	}
 	else if (variant.type() == QVariant::ByteArray) {
-		result = textElement(doc, "data", variant.toByteArray().toBase64());
+		result = textElement(doc, "data", QString::fromLatin1(variant.toByteArray().toBase64()));
 	}
 	else if (variant.type() == QVariant::String) {
 		result = textElement(doc, "string", variant.toString());
@@ -55,16 +54,15 @@ QDomElement PListSerializer::serializeElement(QDomDocument &doc, const QVariant 
 }
 
 QDomElement PListSerializer::serializeList(QDomDocument &doc, const QVariantList &list) {
-	QDomElement element = doc.createElement("array");
+	QDomElement element = doc.createElement(QStringLiteral("array"));
 	foreach(QVariant item, list) {
 		element.appendChild(serializeElement(doc, item));
 	}
 	return element;
 }
 
-
 QDomElement PListSerializer::serializeMap(QDomDocument &doc, const QVariantMap &map) {
-	QDomElement element = doc.createElement("dict");
+	QDomElement element = doc.createElement(QStringLiteral("dict"));
 	QList<QString> keys = map.keys();
 	foreach(QString key, keys) {
 		QDomElement keyElement = textElement(doc, "key", key);
@@ -75,10 +73,10 @@ QDomElement PListSerializer::serializeMap(QDomDocument &doc, const QVariantMap &
 }
 
 QString PListSerializer::toPList(QVariant &variant) {
-	QDomDocument document("plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
-	document.appendChild(document.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
-	QDomElement plist = document.createElement("plist");
-	plist.setAttribute("version", "1.0");
+	QDomDocument document(QStringLiteral("plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\""));
+	document.appendChild(document.createProcessingInstruction(QStringLiteral("xml"), QStringLiteral("version=\"1.0\" encoding=\"UTF-8\"")));
+	QDomElement plist = document.createElement(QStringLiteral("plist"));
+	plist.setAttribute(QStringLiteral("version"), QStringLiteral("1.0"));
 	document.appendChild(plist);
 	plist.appendChild(serializeElement(document, variant));
 	return document.toString();
