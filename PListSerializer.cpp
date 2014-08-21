@@ -11,7 +11,7 @@ static QDomElement textElement(QDomDocument& doc, const char *tagName, QString c
 static QDomElement serializePrimitive(QDomDocument &doc, const QVariant &variant) {
 	QDomElement result;
 	if (variant.type() == QVariant::Bool) {
-        result = textElement(doc, variant.toBool() ? "true" : "false", "" );
+        result = doc.createElement(variant.toBool() ? QStringLiteral("true") : QStringLiteral("false"));
 	}
 	else if (variant.type() == QVariant::Date) {
 		result = textElement(doc, "date", variant.toDate().toString(Qt::ISODate));
