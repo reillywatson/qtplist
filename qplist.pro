@@ -1,3 +1,4 @@
+QT += xml
 TEMPLATE = lib
 
 CONFIG += staticlib flat
