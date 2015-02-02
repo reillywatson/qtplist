@@ -1,7 +1,7 @@
 QT += xml
 TEMPLATE = lib
 
-CONFIG += staticlib flat
+CONFIG += staticlib
 TARGET = qplist
 
 SOURCES += \
