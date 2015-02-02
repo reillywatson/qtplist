@@ -2,7 +2,7 @@ QT += xml
 TEMPLATE = lib
 
 CONFIG += staticlib
-TARGET = qplist
+TARGET = qtplist
 
 SOURCES += \
     plistparser.cpp \
