@@ -5,10 +5,10 @@ CONFIG += staticlib
 TARGET = qplist
 
 SOURCES += \
-    PListParser.cpp \
-    PListSerializer.cpp
+    plistparser.cpp \
+    plistserializer.cpp
     
 HEADERS += \
-    PListParser.h \
-    PListSerializer.h
+    plistparser.h \
+    plistserializer.h
     

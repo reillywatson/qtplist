@@ -1,7 +1,11 @@
-#include "PListParser.h"
-#include <QDomElement>
+// Own includes
+#include "plistparser.h"
+
+// Qt includes
 #include <QDomNode>
 #include <QDomDocument>
+#include <QDateTime>
+#include <QDebug>
 
 QVariant PListParser::parsePList(QIODevice *device) {
 	QVariantMap result;

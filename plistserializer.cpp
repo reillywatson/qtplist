@@ -1,6 +1,11 @@
-#include "PListSerializer.h"
+// Own includes
+#include "plistserializer.h"
+
+// Qt includes
 #include <QDomElement>
 #include <QDomDocument>
+#include <QDate>
+#include <QDateTime>
 
 static QDomElement textElement(QDomDocument& doc, const char *tagName, QString contents) {
 	QDomElement tag = doc.createElement(QString::fromLatin1(tagName));
