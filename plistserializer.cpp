@@ -72,7 +72,7 @@ QDomElement PListSerializer::serializeMap(QDomDocument &doc, const QVariantMap &
 	return element;
 }
 
-QString PListSerializer::toPList(QVariant &variant) {
+QString PListSerializer::toPList(const QVariant &variant) {
 	QDomDocument document(QStringLiteral("plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\""));
 	document.appendChild(document.createProcessingInstruction(QStringLiteral("xml"), QStringLiteral("version=\"1.0\" encoding=\"UTF-8\"")));
 	QDomElement plist = document.createElement(QStringLiteral("plist"));

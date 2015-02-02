@@ -11,7 +11,7 @@
 
 class PListSerializer {
 public:
-	static QString toPList(QVariant &variant);
+	static QString toPList(const QVariant &variant);
 private:
 	static QDomElement serializeElement(QDomDocument &doc, const QVariant &variant);
 	static QDomElement serializeMap(QDomDocument &doc, const QVariantMap &map);
