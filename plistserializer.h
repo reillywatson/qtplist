@@ -1,9 +1,13 @@
-#ifndef PLIST_SERIALIZER_H
-#define PLIST_SERIALIZER_H
+#pragma once
 
-#include <QtCore>
+// Qt includes
+#include <QIODevice>
+#include <QVariant>
+#include <QVariantList>
+#include <QVariantMap>
 #include <QDomElement>
 #include <QDomDocument>
+#include <QString>
 
 class PListSerializer {
 public:
@@ -13,5 +17,4 @@ private:
 	static QDomElement serializeMap(QDomDocument &doc, const QVariantMap &map);
 	static QDomElement serializeList(QDomDocument &doc, const QVariantList &list);
 };
-#endif
 

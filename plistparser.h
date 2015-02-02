@@ -1,7 +1,10 @@
-#ifndef PLIST_PARSER_H
-#define PLIST_PARSER_H
+#pragma once
 
-#include <QtCore>
+// Qt includes
+#include <QIODevice>
+#include <QVariant>
+#include <QVariantList>
+#include <QVariantMap>
 #include <QDomElement>
 
 class PListParser {
@@ -12,4 +15,4 @@ private:
 	static QVariantList parseArrayElement(const QDomElement& node);
 	static QVariantMap parseDictElement(const QDomElement& element);
 };
-#endif
+
