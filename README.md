@@ -4,10 +4,14 @@ This is a PList (Mac OS X property list) parser for Qt.  See http://en.wikipedia
 
 # How to install
 
-qplist is available via qt-pods. See here for reference:
+qtplist is available via qt-pods. See here for reference:
 https://github.com/cybercatalyst/qt-pods
 
+Alternatively, you can just copy PListSerializer and/or PListParser into your source tree.  They don't have any dependencies beyond Qt Core and Qt XML.
+
 # How it works
+
+exampleusage.cpp has a simple example of using each class.
 
 Basically, it takes a QIODevice (generally a file), and returns you a QVariant with all the values in the PList.
 

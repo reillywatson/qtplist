@@ -1,0 +1,3 @@
+*.o
+.qmake.stash
+Makefile
