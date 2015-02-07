@@ -1,3 +1,5 @@
+[![Qt Pods](http://qt-pods.org/assets/logo.png "Qt Pods")](http://qt-pods.org)
+
 # About
 
 This is a PList (Mac OS X property list) parser for Qt.  See http://en.wikipedia.org/wiki/Property_list for more information about the format.
